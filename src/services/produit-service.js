@@ -54,7 +54,7 @@ const updateProduit = async(id,designation,prix,categorie) => {
 
 const deleteProduit = async(id) => {
   try {
-    db.query('DELETE FROM produits WHERE id_produit = ?', [id]);
+    const [rows] = await db.query('DELETE FROM produits WHERE id_produit = ?', [id]);
     console.log('Produit deleted');
     return id;
   } catch (err) {

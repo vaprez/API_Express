@@ -26,7 +26,7 @@ app.listen(PORT, () => {
 
 //pour eviter les erreur cors lors de reqûete effectuer depuis le front
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL
 }));
 
 app.use(express.json());

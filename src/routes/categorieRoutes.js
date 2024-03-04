@@ -7,7 +7,7 @@ const { verifyTokenBlacklist } = require('../middlewares/verifyAuthorisation');
 
 
 router.post('/addCategorie',[validateField('designation'),verifyTokenBlacklist, validate], addCategorie);
-router.get('/getCategorie', [verifyTokenBlacklist], getCategorie);
+router.get('/getCategorie', getCategorie);
 router.get('/getCategorieById',[validateField('id'),verifyTokenBlacklist], getCategorieById);
 router.put('/updateCategorie',[validateField('id','designation'), verifyTokenBlacklist, validate], updateCategorie);
 router.delete('/deleteCategorie',[validateField('id'),verifyTokenBlacklist], deleteCategorie);

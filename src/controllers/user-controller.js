@@ -1,4 +1,5 @@
 const userService = require('../services/user-service');
+const jwt = require('jsonwebtoken');
 
 exports.verifyToken = ((req,res) => {
     try {
@@ -25,7 +26,9 @@ exports.Authenticate = (async (req,res) => {
     try {
         const {email, password} = req.body;
         const token = await userService.authenticateUser(email, password);
-        res.status(200).send({username: email, token: token, days: 7});
+        console.log(token, "ddd")
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).send({username: email, token: token, days: 7, role: decoded.role});
     } catch (err) {
         console.error(err);
         res.status(500).send('Echec de l authentification');

@@ -25,6 +25,7 @@ exports.getProduit = (async (req,res) => {
 exports.getProduitById = (async (req,res) => {
     try {
         const {id} = req.body;
+        console.log('id',id);
         const produit = await produitService.getProduitById(id);
         res.status(200).send(produit);
     } catch (err) {
@@ -51,6 +52,7 @@ exports.deleteProduit = (async (req,res) => {
         const {id} = req.body;
         await produitService.deleteProduit(id);
         res.status(200).send('Produit supprimé');
+        console.log('Produit supprimé');
     } catch (err) {
         console.error(err);
         res.status(500).send('Echec de la suppression du produit');
