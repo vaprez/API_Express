@@ -1,10 +1,10 @@
 const db = require('../../config/database.js');
 
-const addCategorie = async(designation) => {
+const addCategorie = async(designation,image) => {
     try {
         const [rows] = await db.query('SELECT * FROM categorie WHERE designation = ?', [designation]);
         if (rows.length === 0){
-            db.query('INSERT INTO categorie(designation) VALUES(?)', [designation]);
+            db.query('INSERT INTO categorie(designation,image) VALUES(?,?)', [designation,image]);
             // console.log('Categorie added', designation);
             return designation;
             // return response.json({message: 'Categorie ajoutée'});
@@ -39,10 +39,11 @@ const getCategorieById = async(id) => {
 
 }
 
-const updateCategorie = async(id,designation) => {
+const updateCategorie = async(id,designation,image) => {
     try {
-        db.query('UPDATE categorie SET designation = ? WHERE id_categorie = ?', [designation,id]);
-        console.log('Categorie updated' , id);
+        console.log("ze",id,designation,image)
+        const [rows] = await db.query('UPDATE categorie SET designation = ? ,image = ? WHERE id_categorie = ?', [designation,image,id]);
+        console.log('Categorie updated', rows);
         return id,designation;
     } catch (err) {
         console.error(err);

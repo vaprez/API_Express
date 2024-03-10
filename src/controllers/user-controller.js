@@ -54,7 +54,7 @@ exports.invalidateToken = (async (req,res) => {
     try {
         console.log(req.body.headers, "kdi");
         console.log(req.headers.authorization, "xxx")
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.body.token;
         console.log(token, "yyy")
         const decoded = await userService.invalidateToken(token);
         res.status(200).send({username: decoded.userName});

@@ -1,11 +1,11 @@
 const db = require('../../config/database.js');
 
-const addProduit = async(designation,prix,categorie) => {
+const addProduit = async(designation,prix,categorie,image) => {
   try {
     const categorieExist = await db.query('SELECT * FROM categorie WHERE id_categorie = ?', [categorie]);
     if (categorieExist[0].length>0){
         date = new Date();
-        db.query('INSERT INTO produits(designation, prix, categorie,date_in,date_up) VALUES(?, ?, ?, ?,?)', [designation, prix, categorie,date,date]);
+        db.query('INSERT INTO produits(designation, prix, categorie,image,date_in,date_up) VALUES(?, ?, ?, ?, ?,?)', [designation, prix, categorie,image,date,date]);
         console.log('Produit added', designation);
         return {designation};
     }
@@ -32,6 +32,17 @@ const getProduit = async() => {
 const getProduitById = async(id) => {
   try {
     const [rows] = await db.query('SELECT * FROM produits WHERE id_produit = ?', [id]);
+    console.log(rows);
+    return rows;
+  } catch (err) {
+    console.error(err);
+    throw new Error('Error getting produit');
+  }
+}
+
+const getProduitByCategorie = async(id) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM produits WHERE categorie = ?', [id]);
     console.log('Produit found', rows);
     return rows;
   } catch (err) {
@@ -40,10 +51,11 @@ const getProduitById = async(id) => {
   }
 }
 
-const updateProduit = async(id,designation,prix,categorie) => {
+
+const updateProduit = async(id,designation,prix,categorie,image) => {
   try {
         date = new Date();
-        const [rows] = await db.query('UPDATE produits SET designation = ?, prix = ?, categorie = ?,date_up = ? WHERE id_produit = ?', [designation, prix, categorie,date,id]);
+        const [rows] = await db.query('UPDATE produits SET designation = ?, prix = ?, categorie = ?, image = ?,date_up = ? WHERE id_produit = ?', [designation, prix, categorie,image,date,id]);
         console.log('Produit updated');
         return rows ;
   } catch (err) {
@@ -68,5 +80,6 @@ module.exports = {
   getProduit,
   getProduitById,
   updateProduit,
-  deleteProduit
+  deleteProduit,
+  getProduitByCategorie
 }

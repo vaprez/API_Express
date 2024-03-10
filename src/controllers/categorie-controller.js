@@ -2,8 +2,8 @@ const categorieSerfvice = require('../services/categorie-service');
 
 exports.addCategorie = (async (req,res) => {
     try {
-        const {designation} = req.body;
-        categorie = await categorieSerfvice.addCategorie(designation);
+        const {designation,image} = req.body;
+        categorie = await categorieSerfvice.addCategorie(designation,image);
         // res.status(200).send('Categorie ajoutée');
         res.status(200).json({ categorie: categorie });
     } catch (err) {
@@ -24,7 +24,7 @@ exports.getCategorie = (async (req,res) => {
 
 exports.getCategorieById = (async (req,res) => {
     try {
-        const {id} = req.body;
+        const {id} = req.query;
         const categorie = await categorieSerfvice.getCategorieById(id);
         res.status(200).send(categorie);
     } catch (err) {
@@ -36,8 +36,8 @@ exports.getCategorieById = (async (req,res) => {
 exports.updateCategorie = (async (req,res) => {
     try {
         const {id} = req.body;
-        const {designation} = req.body;
-        const categorie = await categorieSerfvice.updateCategorie(id, designation);
+        const {designation,image} = req.body;
+        const categorie = await categorieSerfvice.updateCategorie(id, designation,image);
         res.status(200).send(categorie);
     } catch (err) {
         console.error(err);

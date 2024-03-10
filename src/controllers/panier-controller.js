@@ -2,8 +2,9 @@ const panierService = require('../services/panier-service.js');
 
 exports.addPanier = (async (req,res) => {
     try {
-        const {mail_user, id_produit, quantite} = req.body;
-        produit = await panierService.addPanier(mail_user, id_produit, quantite);
+        const {token, id_produit,designation,prix, quantite} = req.body;
+        console.log("controller",token);
+        produit = await panierService.addPanier(token, id_produit,designation,prix, quantite);
         res.status(200).send('Produit ajouté');
     } catch (err) {
         console.error(err);
@@ -13,8 +14,8 @@ exports.addPanier = (async (req,res) => {
 
 exports.getPanier = (async (req,res) => {
     try {
-        const {mail_user} = req.body;
-        const panier = await panierService.getPanier(mail_user);
+        const {token} = req.query;
+        const panier = await panierService.getPanier(token);
         res.status(200).send(panier);
     } catch (err) {
         console.error(err);
@@ -24,8 +25,9 @@ exports.getPanier = (async (req,res) => {
 
 exports.deletePanier = (async (req,res) => {
     try {
-        const {mail_user, id_produit} = req.body;
-        await panierService.deletePanier(mail_user, id_produit);
+        const {token, id_produit} = req.body;
+        
+        await panierService.deletePanier(token, id_produit);
         res.status(200).send('Produit supprimé');
     } catch (err) {
         console.error(err);
@@ -35,8 +37,9 @@ exports.deletePanier = (async (req,res) => {
 
 exports.deleteAllPanier = (async (req,res) => {
     try {
-        const {mail_user} = req.body;
-        await panierService.deleteAllPanier(mail_user);
+        const {token} = req.body;
+        console.log("controller",token);
+        await panierService.deleteAllPanier(token);
         res.status(200).send('Panier supprimé');
     } catch (err) {
         console.error(err);

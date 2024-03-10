@@ -69,7 +69,7 @@ async function invalidateToken(token){
         //test si le token est belle est bien valide
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log(decoded, "iii");
-        const currentdate = new Date();
+        const currentdate = new Date().toISOString().slice(0, 19).replace('T', ' ');
         db.query('INSERT INTO liste_noire(valeur, date) VALUES(?, "")', [token, currentdate]);
         return decoded;
     } catch (err) {

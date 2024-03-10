@@ -6,9 +6,9 @@ const { addPanier, getPanier, deletePanier,deleteAllPanier } = require('../contr
 const { validateField } = require('../middlewares/sanitizeInput');
 
 
-router.post('/addPanier', [validateField('mail_user', 'id_produit'), verifyTokenBlacklist], addPanier);
+router.post('/addPanier', [validateField('token', 'id_produit'), verifyTokenBlacklist], addPanier);
 router.get('/getPanier', [verifyTokenBlacklist], getPanier);
-router.delete('/deleteProduitPanier', [validateField('mail_user', 'id_produit'), verifyTokenBlacklist], deletePanier);
+router.delete('/deleteProduitPanier', [ verifyTokenBlacklist], deletePanier);
 router.delete('/deleteAllPanier', [validateField('mail_user'), verifyTokenBlacklist], deleteAllPanier);
 
 module.exports = router;
